@@ -10,7 +10,7 @@ export default function Navbar() {
     <div>
         <header className="bg-black md:flex md:justify-between md:items-center md:px-4 md:py-0" style={{ height: '80px' }}>
         <div className="flex items-center justify-between px-4 py-1 md:p-0">
-          <div className=' w-56'>
+          <div className='w-56 ml-20'>
             <Link to={"/"} >
 
               <img src={require('./images/logo.png')} alt="Logo" className=" w-full cursor-pointer md:mt-1 md:mb-1" />
