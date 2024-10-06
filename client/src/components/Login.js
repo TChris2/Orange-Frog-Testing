@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import './loginstyle.css';  
 import logo from './images/orange-frog-logo.png';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [form, setForm] = useState({ email: '', password: '' });
-    const [emailError, setEmailError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate(); 
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -16,9 +18,26 @@ export default function Login() {
         setForm({ ...form, [name]: value });
     };
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
+
+        const response = await fetch('http://localhost:8000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+            localStorage.setItem('isAuthenticated', true); 
+            navigate('/home');
+        }
+         else {
+            setErrorMessage(data.message);
+        }
     };
 
     return (
@@ -35,6 +54,8 @@ export default function Login() {
                         </div>
                     </div>
                     <h2>Login</h2>
+
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} 
 
                     <div className="input-box">
                         <span className="icon">
@@ -64,18 +85,7 @@ export default function Login() {
                         <label>Password</label>
                     </div>
 
-                    <div className="remember-forgot">
-                        <label>
-                            <input type="checkbox" /> Remember me
-                        </label>
-                        <a href="#">Forgot Password?</a>
-                    </div>
-
                     <button type="submit">Login</button>
-
-                    <div className="register-link">
-                        <p>Don't have an account? <a href="#">Register</a></p>
-                    </div>
                 </form>
             </div>
         </div>
