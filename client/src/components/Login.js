@@ -21,7 +21,7 @@ export default function Login() {
     const submit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('https://orange-frog-server.onrender.com/', {
+        const response = await fetch('https://orange-frog-server.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
