@@ -33,7 +33,7 @@ export default function Home() {
                             key={option}
                             onClick={() => setSelectedMenu(option)}
                             className={`px-4 py-2 md:px-0 rounded-full md:rounded-none bg-black md:bg-transparent text-white md:text-black whitespace-nowrap md:whitespace-normal md:hover:text-white cursor-pointer ${
-                                selectedMenu === option ? 'bg-white text-black md:bg-transparent md:text-white' : ''
+                                selectedMenu === option ? 'bg-white text-black md:bg-transparent md:text-black' : ''
                             }`}
                         >
                             {option}
