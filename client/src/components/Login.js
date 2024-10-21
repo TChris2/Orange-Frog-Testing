@@ -21,7 +21,7 @@ export default function Login() {
     const submit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('https://orange-frog-server.onrender.com/login', {
+        const response = await fetch('http://localhost:8000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,10 +32,15 @@ export default function Login() {
         const data = await response.json();
 
         if (response.status === 200) {
-            localStorage.setItem('isAuthenticated', true); 
-            navigate('/home');
-        }
-         else {
+            localStorage.setItem('isAuthenticated', true);
+
+            // Navigate to respective page based on role
+            if (data.role === 'admin') {
+                navigate('/admin');  // Redirect to admin page
+            } else {
+                navigate('/home');   // Redirect to home page
+            }
+        } else {
             setErrorMessage(data.message);
         }
     };

@@ -12,25 +12,19 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
         console.error("Failed to connect to MongoDB");
     });
 
-const userSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required: true
-    },
-    email:{
-        type: String,
-        required: true
-    },
-    password:{
-        type: String,
-        required: true
-    }
-})
-
-const userCollection = mongoose.model('userCollection', userSchema);
-
-const collection = {
-    userCollection
-}
-
-module.exports = collection;
+    const userSchema = new mongoose.Schema({
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true }, 
+        address: { type: String },
+        dob: { type: Date },
+        temporaryPassword: { type: Boolean, default: true } 
+    });
+    
+    const userCollection = mongoose.model('userCollection', userSchema);
+    
+    const collection = {
+        userCollection
+    };
+    
+    module.exports = collection;
