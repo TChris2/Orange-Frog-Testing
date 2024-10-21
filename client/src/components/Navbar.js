@@ -16,7 +16,7 @@ export default function Navbar() {
 
     return (
         <div>
-            <header className="bg-black md:flex md:justify-between md:items-center md:px-4 md:py-0" style={{ height: '80px' }}>
+            <header className="md:flex md:justify-between md:items-center md:px-4 md:py-0" style={{ height: '80px' }}>
                 <div className="flex items-center justify-between px-4 py-1 md:p-0">
                    
                     <div className='w-36 md:w-56 ml-5 md:ml-20'>
@@ -26,7 +26,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="md:hidden">
-                        <button onClick={toggleMenu} className="text-white bg-black">
+                        <button onClick={toggleMenu} className="text-white">
                             <i className="fa-solid fa-bars scale-150"></i>
                         </button>
                     </div>
@@ -42,10 +42,10 @@ export default function Navbar() {
                     </div>
                 )}
 
-                <div className={`fixed top-0 right-0 h-full w-64 bg-black text-white z-50 transform ${showMenu ? "translate-x-0" : "translate-x-full"} transition-transform duration-300`}>
+                <div className={`fixed top-0 right-0 h-full w-64 text-white z-50 transform ${showMenu ? "translate-x-0" : "translate-x-full"} transition-transform duration-300`}>
                     <div className="flex justify-between items-center p-4">
                         <h2 className="text-lg font-bold">Menu</h2>
-                        <button onClick={toggleMenu} className="text-white bg-black ml-40">
+                        <button onClick={toggleMenu} className="text-white ml-40">
                             <i className="fa-solid fa-times scale-150"></i> 
                         </button>
                     </div>
@@ -62,7 +62,7 @@ export default function Navbar() {
             </header>
 
             {showMenu && (
-                <div onClick={toggleMenu} className="fixed inset-0 bg-black opacity-50 z-40"></div>
+                <div onClick={toggleMenu} className="fixed inset-0 opacity-50 z-40"></div>
             )}
         </div>
     );
