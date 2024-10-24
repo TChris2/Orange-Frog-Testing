@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Admin from './components/Admin';
 import PasswordReset from './components/PasswordReset';
+import CompleteProfile from './components/CompleteProfile';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/reset-password" element={<PasswordReset />} />
+            <Route path='/complete-profile' element={<CompleteProfile />} />
           </Routes>
         </Router>
       </div>

@@ -38,15 +38,16 @@ html, body {
   height: auto;
   max-height: 90vh; 
   padding: 40px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   border: 2px solid rgba(255, 255, 255, .5);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(35px);
   overflow: auto; 
+  margin-bottom: 150px;
 }
 
 h2 {

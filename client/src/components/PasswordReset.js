@@ -1,62 +1,100 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './loginstyle.css'; // Same style as the login page for consistency
 
-export default function PasswordReset({ email, onPasswordReset }) {
-    const [tempPassword, setTempPassword] = useState('');
+export default function PasswordReset() {
+    const [tempPassword, setTempPassword] = useState(''); // Add field for temp password
     const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleReset = async (e) => {
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handlePasswordReset = async (e) => {
         e.preventDefault();
-        if (newPassword !== confirmNewPassword) {
-            setErrorMessage('New passwords do not match');
+        if (newPassword !== confirmPassword) {
+            setError('Passwords do not match');
             return;
         }
 
-        const response = await fetch('http://localhost:8000/reset-password', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, tempPassword, newPassword })
-        });
+        try {
+            const email = localStorage.getItem('email'); // Retrieve email from localStorage
 
-        const data = await response.json();
+            const response = await fetch('http://localhost:8000/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, tempPassword, newPassword })
+            });
 
-        if (response.status === 200) {
-            onPasswordReset(); 
-        } else {
-            setErrorMessage(data.message);
+            const data = await response.json();
+
+            if (response.status === 200) {
+                navigate('/complete-profile'); // Navigate after successful password reset
+            } else {
+                setError(data.message);
+            }
+        } catch (error) {
+            setError('Error resetting password');
         }
     };
 
     return (
         <div className="wrapper">
-            <form onSubmit={handleReset}>
-                <input 
-                    type="password" 
-                    placeholder="Enter Temporary Password" 
-                    value={tempPassword}
-                    onChange={(e) => setTempPassword(e.target.value)}
-                    required 
-                />
-                <input 
-                    type="password" 
-                    placeholder="Enter New Password" 
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required 
-                />
-                <input 
-                    type="password" 
-                    placeholder="Confirm New Password" 
-                    value={confirmNewPassword}
-                    onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    required 
-                />
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <button type="submit">Reset Password</button>
-            </form>
+            <div className="login-box"> {/* Re-using the login box styling for consistency */}
+                <h2>Reset Password</h2>
+
+                {/* Error message display */}
+                {error && <p style={{ color: 'red' }}>{error}</p>} 
+
+                <form onSubmit={handlePasswordReset}>
+                    <div className="input-box">
+                        <span className="icon" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                            <ion-icon name={showPassword ? "eye-off" : "eye"}></ion-icon>
+                        </span>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={tempPassword}  // Temp password input
+                            onChange={(e) => setTempPassword(e.target.value)}
+                            required
+                        />
+                        <label>Temporary Password</label>
+                    </div>
+
+                    <div className="input-box">
+                        <span className="icon" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                            <ion-icon name={showPassword ? "eye-off" : "eye"}></ion-icon>
+                        </span>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                        <label>New Password</label>
+                    </div>
+
+                    <div className="input-box">
+                        <span className="icon" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                            <ion-icon name={showPassword ? "eye-off" : "eye"}></ion-icon>
+                        </span>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                        <label>Confirm Password</label>
+                    </div>
+
+                    <button type="submit">Reset Password</button>
+                </form>
+            </div>
         </div>
     );
 }

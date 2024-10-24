@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './loginstyle.css';  
 import logo from './images/orange-frog-logo.png';
 import { useNavigate } from 'react-router-dom'; 
+import Cookies from 'js-cookie';
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,7 @@ export default function Login() {
 
     const submit = async (e) => {
         e.preventDefault();
-
+    
         const response = await fetch('http://localhost:8000/login', {
             method: 'POST',
             headers: {
@@ -28,22 +29,27 @@ export default function Login() {
             },
             body: JSON.stringify(form)
         });
-
+    
         const data = await response.json();
-
+    
         if (response.status === 200) {
             localStorage.setItem('isAuthenticated', true);
-
-            // Navigate to respective page based on role
-            if (data.role === 'admin') {
-                navigate('/admin');  // Redirect to admin page
+            localStorage.setItem('email', form.email); 
+    
+            if (data.resetRequired) {
+                navigate('/reset-password');
+            } else if (data.completeProfile) {
+                navigate('/complete-profile');
             } else {
-                navigate('/home');   // Redirect to home page
+
+                navigate('/home');
             }
         } else {
             setErrorMessage(data.message);
         }
     };
+    
+    
 
     return (
         <div className="wrapper">
@@ -60,6 +66,7 @@ export default function Login() {
                     </div>
                     <h2>Login</h2>
 
+                    {/* Display error message if any */}
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} 
 
                     <div className="input-box">
