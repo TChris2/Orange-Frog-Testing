@@ -25,8 +25,20 @@ const userSchema = new mongoose.Schema({
 
 const userCollection = mongoose.model('userCollection', userSchema);
 
+const eventSchema = new mongoose.Schema({
+    eventName: { type: String, required: true },
+    eventLoadIn: { type: Date, required: true },
+    eventLoadOut: { type: Date, required: true },
+    eventLocation: { type: String, required: true },
+    eventHours: { type: Number },
+    eventDescription: { type: String }
+});
+  
+const eventCollection = mongoose.model('eventCollection', eventSchema);
+
 const collection = {
-    userCollection
+    userCollection,
+    eventCollection
 };
 
 module.exports = collection;
