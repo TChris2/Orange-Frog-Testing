@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Login from './components/Login';
-import Admin from './components/Admin';
-import PasswordReset from './components/PasswordReset';
-import CompleteProfile from './components/CompleteProfile';
+import Home from './components/home/Home';
+import Navbar from './components/navbar/Navbar';
+import Login from './components/login/Login';
+import Admin from './components/admin/Admin';
+import PasswordReset from './components/setProfile/PasswordReset';
+import CompleteProfile from './components/setProfile/CompleteProfile';
 
 function App() {
   return (

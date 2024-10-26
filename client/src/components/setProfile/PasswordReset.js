@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './loginstyle.css'; // Same style as the login page for consistency
+import '../login/loginstyle.css'; // Same style as the login page for consistency
 
 export default function PasswordReset() {
     const [tempPassword, setTempPassword] = useState(''); // Add field for temp password

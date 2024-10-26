@@ -19,9 +19,9 @@ export default function Navbar() {
             <header className="md:flex md:justify-between md:items-center md:px-4 md:py-0" style={{ height: '80px' }}>
                 <div className="flex items-center justify-between px-4 py-1 md:p-0">
                    
-                    <div className='w-36 md:w-56 ml-5 md:ml-20'>
+                    <div className='w-36 md:w-56 ml-5 md:ml-28 mt-4'>
                         <Link to={"/"}>
-                            <img src={require('./images/logo.png')} alt="Logo" className="w-full cursor-pointer md:mt-1 md:mb-1" />
+                            <img src={require('../images/logo.png')} alt="Logo" className="w-full cursor-pointer md:mt-1 md:mb-1" />
                         </Link>
                     </div>
 
@@ -33,7 +33,7 @@ export default function Navbar() {
                 </div>
 
                 {isAuthenticated && location.pathname !== '/' && (
-                    <div className="hidden md:block absolute top-4 right-4">
+                    <div className="hidden md:block absolute top-4 right-12">
                         <button 
                             onClick={handleLogout} 
                             className="text-black bg-white py-2 px-4 rounded-full">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './loginstyle.css';  
-import logo from './images/orange-frog-logo.png';
+import logo from '../images/orange-frog-logo.png';
 import { useNavigate } from 'react-router-dom'; 
 import Cookies from 'js-cookie';
 
@@ -36,23 +36,18 @@ export default function Login() {
             localStorage.setItem('isAuthenticated', true);
             localStorage.setItem('email', form.email); 
     
-            if (data.role === 'admin') {
-                // Redirect admin to the admin page
-                navigate('/admin');
-            } else if (data.resetRequired) {
-                // If the user has a temporary password
+            if (data.resetRequired) {
                 navigate('/reset-password');
             } else if (data.completeProfile) {
-                // If the profile is incomplete
                 navigate('/complete-profile');
             } else {
-                // Redirect normal user to the home page
                 navigate('/home');
             }
         } else {
             setErrorMessage(data.message);
         }
     };
+
 
     return (
         <div className="wrapper">

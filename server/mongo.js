@@ -14,16 +14,31 @@ mongoose.connect(mongoURI)
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, 
-    address: { type: String }, // Optional at first
-    dob: { type: Date },       // Optional at first
-    allergies: { type: String }, // Optional at first
-    extraComments: { type: String }, 
-    temporaryPassword: { type: Boolean, default: true }, // For the first-time login check
-    status: { type: String, default: 'pending' } // Status starts as 'pending'
+    password: { type: String, required: true },
+    address: { type: String },
+    dob: { type: Date },
+    allergies: [{ type: String }], // Stores allergies as an array
+    extraComments: { type: String },
+    temporaryPassword: { type: Boolean, default: true },
+    status: { type: String, default: 'pending' },
+    phone: { 
+        type: String,
+        validate: {
+            validator: function(v) {
+                return /^\(\d{3}\) \d{3}-\d{4}$/.test(v); // Example format: (000) 000-0000
+            },
+            message: props => `${props.value} is not a valid phone number!`
+        }
+    },
+    height: {
+        feet: { type: Number, min: 1, max: 9 },
+        inches: { type: Number, min: 0, max: 11 }
+    },
+    gender: { type: String }
 });
 
 const userCollection = mongoose.model('userCollection', userSchema);
+
 
 const eventSchema = new mongoose.Schema({
     eventName: { type: String, required: true },
